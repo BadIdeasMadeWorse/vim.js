@@ -27,8 +27,7 @@
 		}
 	})();
 
-	exports.runtime = function(filename, oldStyleFutures) {
-		__g.oldStyleFutures = oldStyleFutures;
+	exports.runtime = function(filename) {
 		function __func(_, __this, __arguments, fn, index, frame, body) {
 			if (typeof _ !== 'function') {
                 console.log("callback function is not specified!");

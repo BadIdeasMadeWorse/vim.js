@@ -746,10 +746,12 @@ mergeInto(LibraryManager.library, {
     }
   },
 
+  vimjs_sleep__async: true,
   vimjs_sleep: function (cb, ms) {
     setTimeout(cb, ms);
   },
   
+  vimjs_wait_for_chars__async: true,
   vimjs_wait_for_chars__deps: ['$vimjs'],
   vimjs_wait_for_chars: function(cb, wtime) {
     // TODO: use macros of OK/FAIL
@@ -779,6 +781,7 @@ mergeInto(LibraryManager.library, {
   },
 
   /* process pending events */
+  vimjs_update__async: true,
   vimjs_update: function(cb) {
     setTimeout(cb, 1);
   },
@@ -796,6 +799,7 @@ mergeInto(LibraryManager.library, {
     }
   },
 
+  vimjs_flash__async: true,
   vimjs_flash__deps: ['$vimjs'],
   vimjs_flash: function(cb, msec) {
     var canvas_node = vimjs.canvas_node;
@@ -1083,6 +1087,7 @@ mergeInto(LibraryManager.library, {
     }
   }, 
 
+  vimjs_browse__async: true,
   vimjs_browse__dep: ['$vimjs'],
   vimjs_browse: function(cb, buf, buf_size, saving, default_name, init_dir) {
     default_name = Pointer_stringify(default_name);
@@ -1114,60 +1119,65 @@ mergeInto(LibraryManager.library, {
   },
 
   /* func is a function pointer */
-  vimjs_async_call_safe0: function(_, func) {
+  vimjs_async_call_safe0__async: true,
+  vimjs_async_call_safe0: function(cb, func) {
     func = FUNCTION_TABLE[func];
     if(func.length == 0) {
-      return func();
+      return cb(func());
     } else if (func.length == 1) {
-      return func(_);
+      return func(cb);
     } else {
       throw new Error('Cannot make async call');
     }
   },
 
   /* func is a function pointer */
-  vimjs_async_call_safe1: function(_, func, arg1) {
+  vimjs_async_call_safe1__async: true,
+  vimjs_async_call_safe1: function(cb, func, arg1) {
     func = FUNCTION_TABLE[func];
     if(func.length == 1) {
-      return func(arg1);
+      return cb(func(arg1));
     } else if (func.length == 2) {
-      return func(_, arg1);
+      return func(cb, arg1);
     } else {
       throw new Error('Cannot make async call');
     }
   },
 
   /* func is a function pointer */
-  vimjs_async_call_safe2: function(_, func, arg1, arg2) {
+  vimjs_async_call_safe2__async: true,
+  vimjs_async_call_safe2: function(cb, func, arg1, arg2) {
     func = FUNCTION_TABLE[func];
     if(func.length == 2) {
-      return func(arg1, arg2);
+      return cb(func(arg1, arg2));
     } else if (func.length == 3) {
-      return func(_, arg1, arg2);
+      return func(cb, arg1, arg2);
     } else {
       throw new Error('Cannot make async call');
     }
   },
 
   /* func is a function pointer */
-  vimjs_async_call_safe3: function(_, func, arg1, arg2, arg3) {
+  vimjs_async_call_safe3__async: true,
+  vimjs_async_call_safe3: function(cb, func, arg1, arg2, arg3) {
     func = FUNCTION_TABLE[func];
     if(func.length == 3) {
-      return func(arg1, arg2, arg3);
+      return cb(func(arg1, arg2, arg3));
     } else if (func.length == 4) {
-      return func(_, arg1, arg2, arg3);
+      return func(cb, arg1, arg2, arg3);
     } else {
       throw new Error('Cannot make async call');
     }
   },
 
   /* func is a function pointer */
-  vimjs_async_call_safe6: function(_, func, arg1, arg2, arg3, arg4, arg5, arg6) {
+  vimjs_async_call_safe6__async: true,
+  vimjs_async_call_safe6: function(cb, func, arg1, arg2, arg3, arg4, arg5, arg6) {
     func = FUNCTION_TABLE[func];
     if(func.length == 6) {
-      return func(arg1, arg2, arg3, arg4, arg5, arg6);
+      return cb(func(arg1, arg2, arg3, arg4, arg5, arg6));
     } else if (func.length == 7) {
-      return func(_, arg1, arg2, arg3, arg4, arg5, arg6);
+      return func(cb, arg1, arg2, arg3, arg4, arg5, arg6);
     } else {
       throw new Error('Cannot make async call');
     }
